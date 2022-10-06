@@ -19,17 +19,37 @@
 
 class SecondClock {
     constructor(cb) {
+      let sec = 0
+      let min = 0
+      let hr = 0
       // ADD CODE HERE
+      this.cb = () => {
+        if(sec>=60) {
+          sec = 0 ;
+          min += 1 ;
+          if(min >= 60) {
+            min = 0 ;
+            hr +=1
+          }
+        }
+        return cb(`${hr} : ${min} : ${sec+=1}`)
+      }
     }
     // ADD METHODS HERE
+    start(){
+       this.time = setInterval( () => this.cb() , 1000)
+    }
+    reset(){
+      clearInterval(this.time)
+    }
   }
   
   // UNCOMMENT THESE TO TEST YOUR WORK!
-  // const clock = new SecondClock((val) => { console.log(val) });
-  // console.log("Started Clock.");
-  // clock.start();
-  // setTimeout(() => {
-  //     clock.reset();
-  //     console.log("Stopped Clock after 6 seconds.");
-  // }, 6000);
+  const clock = new SecondClock((val) => { console.log(val) });
+  console.log("Started Clock.");
+  clock.start();
+  setTimeout(() => {
+      clock.reset();
+      console.log("Stopped Clock after 62 seconds.");
+  }, 62000);
   
